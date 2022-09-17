@@ -58,8 +58,19 @@ public class User {
     }
     public static User getUserById(int id) {
         User ret = null;
+        getUsers();
         for(User u : users) {
             if (u.getId() == id) {
+                ret = u;
+            }
+        }
+        return ret;
+    }
+    public static User getUserByUserLogin(String login) {
+        User ret = null;
+        getUsers();
+        for(User u : users) {
+            if (u.getUserLogin().equals(login)) {
                 ret = u;
             }
         }
