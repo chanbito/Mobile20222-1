@@ -9,11 +9,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.snackbar.Snackbar;
-
 import java.util.List;
 
-import br.edu.uniritter.mobile.mobile20222_1.Activity2;
+import br.edu.uniritter.mobile.mobile20222_1.view.Activity2;
 import br.edu.uniritter.mobile.mobile20222_1.R;
 import br.edu.uniritter.mobile.mobile20222_1.model.User;
 

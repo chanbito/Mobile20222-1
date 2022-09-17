@@ -1,4 +1,4 @@
-package br.edu.uniritter.mobile.mobile20222_1;
+package br.edu.uniritter.mobile.mobile20222_1.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -8,12 +8,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import br.edu.uniritter.mobile.mobile20222_1.R;
 import br.edu.uniritter.mobile.mobile20222_1.adapter.UsersAddapter;
 import br.edu.uniritter.mobile.mobile20222_1.model.User;
+import br.edu.uniritter.mobile.mobile20222_1.repository.UserRepository;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private final String TAG = "MainActivity";
@@ -21,9 +25,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getIntent().getIntExtra("userId",-1);
         Log.d(TAG, "onCreate: começando a bagaça");
+
+        //aqui infla o layout xml
         setContentView(R.layout.activity_main);
+
         /*(R.id.botao).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -44,7 +50,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
             }
         };
-
+        //buscando um elemento visual do layout para manuipulação
+        Button bt  = findViewById(R.id.button02);
 
         findViewById(R.id.button02).setOnClickListener( ocl );
         findViewById(R.id.botao).setOnClickListener(
@@ -55,12 +62,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     startActivity(intent);
                 });
         RecyclerView rc = findViewById(R.id.recycler1);
-        List<User> lista = new ArrayList<>();
-        lista.add(User.getUsers().get(4));
-        UsersAddapter adapter = new UsersAddapter( lista);
+        UsersAddapter adapter = new UsersAddapter( UserRepository.getInstance().getUsers());
         rc.setAdapter(adapter);
         LinearLayoutManager llm1 = new LinearLayoutManager(this);
         rc.setLayoutManager(llm1);
+
+
+        //int id = getIntent().getIntExtra("userId",-1);
+        //User user = UserRepository.getInstance().getUserById(id);
+        //troquei de envio de id int para objeto
+        User user = getIntent().getParcelableExtra("userObj");
+
+        TextView tv = (TextView) findViewById(R.id.editTextTextPersonName2);
+        tv.setText("bem vindo "+user.getName()+"("+user.getPassword()+")");
+
     }
 
     @Override

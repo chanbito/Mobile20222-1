@@ -1,7 +1,9 @@
-package br.edu.uniritter.mobile.mobile20222_1;
+package br.edu.uniritter.mobile.mobile20222_1.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,8 +11,10 @@ import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import br.edu.uniritter.mobile.mobile20222_1.R;
 import br.edu.uniritter.mobile.mobile20222_1.model.User;
 import br.edu.uniritter.mobile.mobile20222_1.presenter.LoginPresenter;
+import br.edu.uniritter.mobile.mobile20222_1.presenter.LoginPresenter2;
 import br.edu.uniritter.mobile.mobile20222_1.presenter.LoginPresenterContract;
 
 public class LoginActivity extends AppCompatActivity implements LoginPresenterContract.view {
@@ -20,7 +24,11 @@ public class LoginActivity extends AppCompatActivity implements LoginPresenterCo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        //this.presenter = new LoginPresenter(this);
+        //trocando a presenter, com o mesmo contrato
         this.presenter = new LoginPresenter(this);
+
         findViewById(R.id.buttonLogin).setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -41,8 +49,9 @@ public class LoginActivity extends AppCompatActivity implements LoginPresenterCo
     }
 
     @Override
-    public void validLogin(User user) {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+    public Activity getActivity() {
+        return this;
     }
+
+
 }

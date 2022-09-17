@@ -1,17 +1,16 @@
 package br.edu.uniritter.mobile.mobile20222_1.presenter;
 
 import android.content.Intent;
-import android.content.res.Resources;
 
-import br.edu.uniritter.mobile.mobile20222_1.R;
 import br.edu.uniritter.mobile.mobile20222_1.model.User;
 import br.edu.uniritter.mobile.mobile20222_1.repository.UserRepository;
+import br.edu.uniritter.mobile.mobile20222_1.view.Activity2;
 import br.edu.uniritter.mobile.mobile20222_1.view.MainActivity;
 
-public class LoginPresenter implements LoginPresenterContract.presenter{
+public class LoginPresenter2 implements LoginPresenterContract.presenter{
     private LoginPresenterContract.view view;
 
-    public LoginPresenter(LoginPresenterContract.view view) {
+    public LoginPresenter2(LoginPresenterContract.view view) {
         this.view = view;
     }
     @Override
@@ -27,7 +26,7 @@ public class LoginPresenter implements LoginPresenterContract.presenter{
     }
     @Override
     public void validLogin(User user) {
-        Intent intent = new Intent(view.getActivity(), MainActivity.class);
+        Intent intent = new Intent(view.getActivity(), Activity2.class);
         //intent.putExtra("userId", user.getId());
         intent.putExtra("userObj", user);
         view.getActivity().startActivity(intent);

@@ -1,15 +1,18 @@
 package br.edu.uniritter.mobile.mobile20222_1.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class User {
+public class User implements Parcelable {
     private int id;
     private String name;
     private String userLogin;
     private String password;
 
-    private static List<User> users;
+
 
 
     public User(int id, String name, String userLogin, String password) {
@@ -18,6 +21,25 @@ public class User {
         this.userLogin = userLogin;
         this.password = password;
     }
+
+    protected User(Parcel in) {
+        id = in.readInt();
+        name = in.readString();
+        userLogin = in.readString();
+        password = in.readString();
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -42,38 +64,17 @@ public class User {
         this.password = password;
     }
 
-    public static List<User> getUsers() {
-        if (users == null) {
-            users = new ArrayList<>();
-            users.add( new User(1, "Jean", "jp1", "1234"));
-            users.add( new User(2, "Jean 2", "jp2", "1234"));
-            users.add( new User(3, "Jean 3", "jp3", "1234"));
-            users.add( new User(4, "Jean 4", "jp4", "1234"));
-            users.add( new User(11, "Jean 11", "jp1", "1234"));
-            users.add( new User(12, "Jean 12", "jp2", "1234"));
-            users.add( new User(13, "Jean 13", "jp3", "1234"));
-            users.add( new User(14, "Jean 14", "jp4", "1234"));
-        }
-        return users;
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
-    public static User getUserById(int id) {
-        User ret = null;
-        getUsers();
-        for(User u : users) {
-            if (u.getId() == id) {
-                ret = u;
-            }
-        }
-        return ret;
-    }
-    public static User getUserByUserLogin(String login) {
-        User ret = null;
-        getUsers();
-        for(User u : users) {
-            if (u.getUserLogin().equals(login)) {
-                ret = u;
-            }
-        }
-        return ret;
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeString(name);
+        parcel.writeString(userLogin);
+        parcel.writeString(password);
     }
 }
