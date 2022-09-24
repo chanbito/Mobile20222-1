@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -16,6 +17,7 @@ import br.edu.uniritter.mobile.mobile20222_1.model.User;
 import br.edu.uniritter.mobile.mobile20222_1.presenter.LoginPresenter;
 import br.edu.uniritter.mobile.mobile20222_1.presenter.LoginPresenter2;
 import br.edu.uniritter.mobile.mobile20222_1.presenter.LoginPresenterContract;
+import br.edu.uniritter.mobile.mobile20222_1.repository.UserRepository;
 
 public class LoginActivity extends AppCompatActivity implements LoginPresenterContract.view {
 
@@ -23,6 +25,10 @@ public class LoginActivity extends AppCompatActivity implements LoginPresenterCo
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.e("TAG", "onCreate: antes do getInstance" );
+        UserRepository.getInstance(this);
+        Log.e("TAG", "onCreate: depois do getInstance "+UserRepository.getInstance(this).getUsers().size());
+
         setContentView(R.layout.activity_login);
 
         //this.presenter = new LoginPresenter(this);

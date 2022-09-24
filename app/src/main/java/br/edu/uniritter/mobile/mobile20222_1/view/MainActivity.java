@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     startActivity(intent);
                 });
         RecyclerView rc = findViewById(R.id.recycler1);
-        UsersAddapter adapter = new UsersAddapter( UserRepository.getInstance().getUsers());
+        UsersAddapter adapter = new UsersAddapter( UserRepository.getInstance(this).getUsers());
         rc.setAdapter(adapter);
         LinearLayoutManager llm1 = new LinearLayoutManager(this);
         rc.setLayoutManager(llm1);
