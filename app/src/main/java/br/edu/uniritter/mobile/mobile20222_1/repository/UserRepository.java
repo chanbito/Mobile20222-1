@@ -32,9 +32,64 @@ public class UserRepository implements Listener<JSONArray>,Response.ErrorListene
         this.contexto = contexto;
         users = new ArrayList<>();
         RequestQueue queue = Volley.newRequestQueue(contexto);
+        //usando o proprio objeto como ResponseListener
         JsonArrayRequest jaRequest = new JsonArrayRequest(Request.Method.GET,
                                                        "https://jsonplaceholder.typicode.com/users",
                                                 null, this, this);
+
+        //exemplo de uso com injeção do ResponseListener e erro Listener
+        JsonArrayRequest jaRequestInject1 = new JsonArrayRequest(Request.Method.GET,
+                "https://jsonplaceholder.typicode.com/users",
+                null,
+                new Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.e(TAG, "onResponse: " + response.length());
+                        for (int i = 0; i < response.length(); i++) {
+                            try {
+                                JSONObject json = response.getJSONObject(i);
+                                Log.d(TAG, "onResponse: " + json.toString());
+                                users.add(new User(json.getInt("id"), json.getString("name"),
+                                        json.getString("username"), json.getString("username")));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        Log.e(TAG, "onResponse: terminei");
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e(TAG, "onErrorResponse: " + error.getMessage());
+                    }
+                });
+        //exemplo de uso com injeção com lambda do ResponseListener e erro Listener
+        JsonArrayRequest jaRequestInject2 = new JsonArrayRequest(Request.Method.GET,
+                "https://jsonplaceholder.typicode.com/users",
+                null,
+                (JSONArray response) -> {
+                        response = response;
+                        Log.e(TAG, "onResponse: " + response.length());
+                        for (int i = 0; i < response.length(); i++) {
+                            try {
+                                JSONObject json = response.getJSONObject(i);
+                                Log.d(TAG, "onResponse: " + json.toString());
+                                users.add(new User(json.getInt("id"), json.getString("name"),
+                                        json.getString("username"), json.getString("username")));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        Log.e(TAG, "onResponse: terminei");
+                    }
+                ,
+                (VolleyError error) ->{
+                        Log.e(TAG, "onErrorResponse: " + error.getMessage());
+                    }
+                );
+
+
         queue.add(jaRequest);
 
         Log.e(TAG, "UserRepository: lancei" );
@@ -99,7 +154,7 @@ public class UserRepository implements Listener<JSONArray>,Response.ErrorListene
         }
         Log.e(TAG, "onResponse: terminei" );
     }
-    
+
     @Override
     public void onErrorResponse(VolleyError error) {
         Log.e(TAG, "onErrorResponse: "+error.getMessage() );
