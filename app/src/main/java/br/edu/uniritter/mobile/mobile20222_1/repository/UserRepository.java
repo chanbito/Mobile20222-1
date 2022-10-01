@@ -49,8 +49,7 @@ public class UserRepository implements Listener<JSONArray>,Response.ErrorListene
                             try {
                                 JSONObject json = response.getJSONObject(i);
                                 Log.d(TAG, "onResponse: " + json.toString());
-                                users.add(new User(json.getInt("id"), json.getString("name"),
-                                        json.getString("username"), json.getString("username")));
+                                users.add(createUserFromJson(json));
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -75,8 +74,11 @@ public class UserRepository implements Listener<JSONArray>,Response.ErrorListene
                             try {
                                 JSONObject json = response.getJSONObject(i);
                                 Log.d(TAG, "onResponse: " + json.toString());
-                                users.add(new User(json.getInt("id"), json.getString("name"),
-                                        json.getString("username"), json.getString("username")));
+                                //isto
+                                users.add(createUserFromJson(json));
+                                //troca isto abaixo
+                                //users.add(new User(json.getInt("id"), json.getString("name"),
+                                //        json.getString("username"), json.getString("username")));
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -113,6 +115,17 @@ public class UserRepository implements Listener<JSONArray>,Response.ErrorListene
         }
         return instance;
     }
+    // metodo para criar um objeto User apartir de um json
+    public User createUserFromJson(JSONObject json) {
+        try {
+            return new User(json.getInt("id"), json.getString("name"),
+                json.getString("username"), json.getString("username"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
     public List<User> getUsers() {
         return users;
@@ -137,6 +150,10 @@ public class UserRepository implements Listener<JSONArray>,Response.ErrorListene
         }
         return ret;
     }
+    public User addUser(User user) {return null;}
+    public User updateUser(User user) {return null;}
+    public User removeUser(User user) {return null;}
+
 
     @Override
     public void onResponse(JSONArray response) {
