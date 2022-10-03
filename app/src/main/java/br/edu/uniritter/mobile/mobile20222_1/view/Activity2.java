@@ -2,18 +2,12 @@ package br.edu.uniritter.mobile.mobile20222_1.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.TextView;
 
 import br.edu.uniritter.mobile.mobile20222_1.R;
-import br.edu.uniritter.mobile.mobile20222_1.adapter.UsersAddapter;
 import br.edu.uniritter.mobile.mobile20222_1.databinding.Activity2Binding;
 import br.edu.uniritter.mobile.mobile20222_1.model.User;
-import br.edu.uniritter.mobile.mobile20222_1.repository.UserRepository;
 
 public class Activity2 extends AppCompatActivity {
     private final String TAG = "Activity2";

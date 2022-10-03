@@ -11,9 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import br.edu.uniritter.mobile.mobile20222_1.R;
 import br.edu.uniritter.mobile.mobile20222_1.adapter.UsersAddapter;
 import br.edu.uniritter.mobile.mobile20222_1.model.User;
