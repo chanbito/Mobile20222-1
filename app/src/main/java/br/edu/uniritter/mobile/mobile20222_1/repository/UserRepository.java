@@ -91,7 +91,6 @@ public class UserRepository implements Listener<JSONArray>,Response.ErrorListene
         Log.d(TAG, "getUserByUserLogin: users.size " + users.size());
         for (User u : users) {
             Log.d(TAG, "getUserByUserLogin: " + login + " ->" + u.getUserLogin());
-            Log.d(TAG, "getUserByUserLogin: pass" + u.getPassword());
             if (u.getUserLogin().equals(login)) {
                 ret = u;
             }
