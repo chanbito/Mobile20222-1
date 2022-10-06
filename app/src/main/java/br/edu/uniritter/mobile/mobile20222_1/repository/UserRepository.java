@@ -3,6 +3,8 @@ package br.edu.uniritter.mobile.mobile20222_1.repository;
 import android.content.Context;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -18,9 +20,12 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.edu.uniritter.mobile.mobile20222_1.model.Address;
+import br.edu.uniritter.mobile.mobile20222_1.model.Company;
+import br.edu.uniritter.mobile.mobile20222_1.model.Geo;
 import br.edu.uniritter.mobile.mobile20222_1.model.User;
 
-public class UserRepository implements Listener<JSONArray>,Response.ErrorListener{
+public class UserRepository implements Listener<JSONArray>,Response.ErrorListener {
     private final String TAG = "UserRepository";
     private List<User> users;
     private static UserRepository instance;
@@ -33,79 +38,12 @@ public class UserRepository implements Listener<JSONArray>,Response.ErrorListene
         RequestQueue queue = Volley.newRequestQueue(contexto);
         //usando o proprio objeto como ResponseListener
         JsonArrayRequest jaRequest = new JsonArrayRequest(Request.Method.GET,
-                                                       "https://jsonplaceholder.typicode.com/users",
-                                                null, this, this);
-
-        //exemplo de uso com injeção do ResponseListener e erro Listener
-        JsonArrayRequest jaRequestInject1 = new JsonArrayRequest(Request.Method.GET,
                 "https://jsonplaceholder.typicode.com/users",
-                null,
-                new Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        Log.e(TAG, "onResponse: " + response.length());
-                        for (int i = 0; i < response.length(); i++) {
-                            try {
-                                JSONObject json = response.getJSONObject(i);
-                                Log.d(TAG, "onResponse: " + json.toString());
-                                users.add(createUserFromJson(json));
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        Log.e(TAG, "onResponse: terminei");
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e(TAG, "onErrorResponse: " + error.getMessage());
-                    }
-                });
-        //exemplo de uso com injeção com lambda do ResponseListener e erro Listener
-        JsonArrayRequest jaRequestInject2 = new JsonArrayRequest(Request.Method.GET,
-                "https://jsonplaceholder.typicode.com/users",
-                null,
-                (JSONArray response) -> {
-                        response = response;
-                        Log.e(TAG, "onResponse: " + response.length());
-                        for (int i = 0; i < response.length(); i++) {
-                            try {
-                                JSONObject json = response.getJSONObject(i);
-                                Log.d(TAG, "onResponse: " + json.toString());
-                                //isto
-                                users.add(createUserFromJson(json));
-                                //troca isto abaixo
-                                //users.add(new User(json.getInt("id"), json.getString("name"),
-                                //        json.getString("username"), json.getString("username")));
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        Log.e(TAG, "onResponse: terminei");
-                    }
-                ,
-                (VolleyError error) ->{
-                        Log.e(TAG, "onErrorResponse: " + error.getMessage());
-                    }
-                );
-
+                null, this, this);
 
         queue.add(jaRequest);
 
-        Log.e(TAG, "UserRepository: lancei" );
-        /*
-        users.add( new User(1, "Jean", "jp1", "1234"));
-        users.add( new User(2, "Jean 2", "jp2", "1234"));
-        users.add( new User(3, "Jean 3", "jp3", "1234"));
-        users.add( new User(4, "Jean 4", "jp4", "1234"));
-        users.add( new User(11, "Jean 11", "jp1", "1234"));
-        users.add( new User(12, "Jean 12", "jp2", "1234"));
-        users.add( new User(13, "Jean 13", "jp3", "1234"));
-        users.add( new User(14, "Jean 14", "jp4", "1234"));
-         */
-
-        
+        Log.e(TAG, "UserRepository: lancei");
     }
 
     public static UserRepository getInstance(Context contexto) {
@@ -114,11 +52,19 @@ public class UserRepository implements Listener<JSONArray>,Response.ErrorListene
         }
         return instance;
     }
-    // metodo para criar um objeto User apartir de um json
-    public User createUserFromJson(JSONObject json) {
+
+    private Company getCompany(JSONObject json) throws JSONException {
+        return new Company(json.getString("name"), json.getString("catchPhrase"),
+                json.getString("bs"));
+    }
+
+    private Address GetAdrress(JSONObject json) {
         try {
-            return new User(json.getInt("id"), json.getString("name"),
-                json.getString("username"), json.getString("username"));
+            Geo _geo = new Geo(json.getJSONObject("geo").getString("lat"),
+                    json.getJSONObject("geo").getString("lng"));
+            return new Address(json.getString("street"), json.getString("suite"),
+                    json.getString("city"), json.getString("zipcode"), _geo);
+
         } catch (JSONException e) {
             e.printStackTrace();
             return null;
@@ -129,70 +75,65 @@ public class UserRepository implements Listener<JSONArray>,Response.ErrorListene
     public List<User> getUsers() {
         return users;
     }
+
     public User getUserById(int id) {
         User ret = null;
-        for(User u : users) {
+        for (User u : users) {
             if (u.getId() == id) {
                 ret = u;
             }
         }
         return ret;
     }
+
     public User getUserByUserLogin(String login) {
         User ret = null;
-        Log.d(TAG, "getUserByUserLogin: users.size "+users.size());
-        for(User u : users) {
-            Log.d(TAG, "getUserByUserLogin: "+login+" ->"+u.getUserLogin());
+        Log.d(TAG, "getUserByUserLogin: users.size " + users.size());
+        for (User u : users) {
+            Log.d(TAG, "getUserByUserLogin: " + login + " ->" + u.getUserLogin());
+            Log.d(TAG, "getUserByUserLogin: pass" + u.getPassword());
             if (u.getUserLogin().equals(login)) {
                 ret = u;
             }
         }
         return ret;
     }
-    public User addUser(User user) {return null;}
-    public User updateUser(User user) {return null;}
-    public User removeUser(User user) {return null;}
+
+    public User addUser(User user) {
+        return null;
+    }
+
+    public User updateUser(User user) {
+        return null;
+    }
+
+    public User removeUser(User user) {
+        return null;
+    }
 
 
     @Override
     public void onResponse(JSONArray response) {
-        Log.e(TAG, "onResponse: "+response.length());
+        Log.e(TAG, "onResponse: " + response.length());
         for (int i = 0; i < response.length(); i++) {
             try {
                 JSONObject json = response.getJSONObject(i);
-                Log.d(TAG, "onResponse: "+json.toString());
-                users.add( new User( json.getInt("id"), json.getString("name"),
-                        json.getString("username"), json.getString("username")));
+                Log.d(TAG, "onResponse: " + json.toString());
+                users.add(new User(json.getInt("id"), json.getString("name"),
+                        json.getString("username"), json.getString("username"),
+                        json.getString("email"), json.getString("phone"),
+                        json.getString("website"), GetAdrress(json.getJSONObject("address")),
+                        getCompany(json.getJSONObject("company"))));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
         }
-        Log.e(TAG, "onResponse: terminei" );
+        Log.e(TAG, "onResponse: terminei");
     }
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        Log.e(TAG, "onErrorResponse: "+error.getMessage() );
-    }
-    private void teste() {
-        Integer a = null;
-        int b = 0;
-
-        float c;
-        try {
-            c = a.floatValue() / b;
-        } catch (ArithmeticException e) {
-            e.getMessage();
-            e.printStackTrace();
-            c = 0;
-        } catch (NullPointerException npe) {
-            c = 0;
-        }
-
-        String str = null;
-        str.getBytes();
-
-
+        Log.e(TAG, "onErrorResponse: " + error.getMessage());
     }
 }

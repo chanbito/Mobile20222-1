@@ -3,23 +3,28 @@ package br.edu.uniritter.mobile.mobile20222_1.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class User implements Parcelable {
     private int id;
     private String name;
     private String userLogin;
     private String password;
+    private String email;
+    private String phone;
+    private String website;
+    private Address address;
+    private Company company;
 
-
-
-
-    public User(int id, String name, String userLogin, String password) {
+    public User(int id, String name, String userLogin, String password, String email, String phone,
+                String website, Address address, Company company) {
         this.id = id;
         this.name = name;
         this.userLogin = userLogin;
         this.password = password;
+        this.email = email;
+        this.phone = phone;
+        this.website = website;
+        this.address = address;
+        this.company = company;
     }
 
     protected User(Parcel in) {
@@ -27,6 +32,12 @@ public class User implements Parcelable {
         name = in.readString();
         userLogin = in.readString();
         password = in.readString();
+        email = in.readString();
+        phone = in.readString();
+        website = in.readString();
+        // visitar https://stackoverflow.com/questions/42665066/android-parsing-same-variable-object-name-in-retrofit
+        address = (Address)in.readParcelable(Address.class.getClassLoader(),);
+        company = (Company)in.readParcelable(Company.class.getClassLoader());
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -76,5 +87,47 @@ public class User implements Parcelable {
         parcel.writeString(name);
         parcel.writeString(userLogin);
         parcel.writeString(password);
+        parcel.writeParcelable(address, i);
+        parcel.writeParcelable(company, i);
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
 }

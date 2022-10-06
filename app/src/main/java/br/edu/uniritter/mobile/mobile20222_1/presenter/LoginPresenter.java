@@ -1,6 +1,7 @@
 package br.edu.uniritter.mobile.mobile20222_1.presenter;
 
 import android.content.Intent;
+import android.util.Log;
 
 import br.edu.uniritter.mobile.mobile20222_1.model.User;
 import br.edu.uniritter.mobile.mobile20222_1.repository.UserRepository;
@@ -17,8 +18,10 @@ public class LoginPresenter implements LoginPresenterContract.presenter{
         UserRepository repo  = UserRepository.getInstance(view.getActivity());
         User u = repo.getUserByUserLogin(login);
         if (u == null || ! u.getPassword().equals(password)) {
+            Log.e("LoginPresenter", "Usuário ou senha Inválido");
             view.message("Usuário ou senha Inválido");
         } else {
+            Log.e("LoginPresenter", "trocada");
             u.setPassword("trocada");
             validLogin(u);
         }

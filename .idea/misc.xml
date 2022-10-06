@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/gabri/StudioProjects/Mobile20222-1/app/src/main/res/layout/activity_2.xml" value="0.1641337386018237" />
+        <entry key="..\:/Users/gabri/StudioProjects/Mobile20222-1/app/src/main/res/layout/activity_login.xml" value="0.3369330453563715" />
+        <entry key="..\:/Users/gabri/StudioProjects/Mobile20222-1/app/src/main/res/layout/activity_main.xml" value="0.1641337386018237" />
+        <entry key="..\:/Users/gabri/StudioProjects/Mobile20222-1/app/src/main/res/layout/layout_user_vh.xml" value="0.1641337386018237" />
         <entry key="..\:/projetosAndroid/Mobile202221/app/src/main/res/layout/activity_2.xml" value="0.25" />
         <entry key="..\:/projetosAndroid/Mobile202221/app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="..\:/projetosAndroid/Mobile202221/app/src/main/res/layout/activity_main.xml" value="0.33" />
@@ -10,7 +14,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

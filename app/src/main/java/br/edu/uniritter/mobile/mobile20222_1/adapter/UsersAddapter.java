@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import br.edu.uniritter.mobile.mobile20222_1.view.Activity2;
 import br.edu.uniritter.mobile.mobile20222_1.R;
 import br.edu.uniritter.mobile.mobile20222_1.model.User;
 
@@ -25,7 +24,8 @@ public class UsersAddapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View layoutVH = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_user_vh,parent,false);
+        View layoutVH = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_user_vh,
+                parent,false);
         return new UserViewHolder(layoutVH);
     }
 
@@ -35,11 +35,6 @@ public class UsersAddapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         TextView tv1 = holder.itemView.findViewById(R.id.textViewId);
         tv1.setText(obj.getId()+"");
         ((TextView) holder.itemView.findViewById(R.id.textViewName)).setText(obj.getName());
-        holder.itemView.setOnClickListener((view)->{
-            Intent intent = new Intent(view.getContext(), Activity2.class);
-            intent.putExtra("id",obj.getId());
-            view.getContext().startActivity(intent);
-        });
     }
 
     @Override
