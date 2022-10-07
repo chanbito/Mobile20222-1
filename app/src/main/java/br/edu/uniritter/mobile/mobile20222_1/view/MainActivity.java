@@ -100,8 +100,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //troquei de envio de id int para objeto
 
 
-        //button = findViewById(R.id.ToDoButton);
-        //button.setText("0");// + ToDoRepository.getInstance(this).GetTudosUncheckbyUser(user.getId()));
+        button = findViewById(R.id.ToDoButton);
+        button.setText("" + ToDoRepository.getInstance(this).GetTudosUncheckbyUser(user.getId()));
 
 
         //TextView tv = (TextView) findViewById(R.id.editTextTextPersonName2);
