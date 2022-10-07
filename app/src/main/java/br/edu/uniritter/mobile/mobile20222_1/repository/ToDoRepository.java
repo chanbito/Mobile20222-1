@@ -6,6 +6,7 @@ import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
@@ -17,11 +18,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.edu.uniritter.mobile.mobile20222_1.model.Photo;
 import br.edu.uniritter.mobile.mobile20222_1.model.ToDo;
-import br.edu.uniritter.mobile.mobile20222_1.model.User;
 
-public class ToDoRepository implements Response.Listener<JSONArray>, Response.ErrorListener {
+public class ToDoRepository implements Listener<JSONArray>, Response.ErrorListener {
     private final String TAG = "ToDoRepository";
     private List<ToDo>  todos;
     private static ToDoRepository instance;
@@ -30,11 +29,11 @@ public class ToDoRepository implements Response.Listener<JSONArray>, Response.Er
     public ToDoRepository(Context context) {
         super();
         this.context = context;
-        todos = new ArrayList<ToDo>();
+        todos = new ArrayList<>();
         RequestQueue queue = Volley.newRequestQueue(context);
         JsonArrayRequest jar = new JsonArrayRequest(Request.Method.GET,
                 "https://jsonplaceholder.typicode.com/todos",
-                null,null,null);
+                null,this,this);
 
         queue.add(jar);
 
@@ -61,13 +60,24 @@ public class ToDoRepository implements Response.Listener<JSONArray>, Response.Er
         return ret;
     }
 
-    public List<ToDo> GetTudobyUser(int id){
+    public List<ToDo> GetTuDobyUser(int id){
         List<ToDo> ret = new ArrayList<ToDo>();
         Log.d(TAG, "GetTudobyUser: " + todos.size());
         for (ToDo t: todos){
             if(t.getUserId() == id)
                 ret.add(t);
         }
+        return ret;
+    }
+
+    public int GetTudosUncheckbyUser(int id){
+        int ret = 0;
+        Log.d(TAG, "GetTudosUncheckbyUser: " + todos.size());
+        for (ToDo t: todos){
+            if(t.getUserId() == id && !t.getCompleted())
+                ret++;
+        }
+        Log.d(TAG, "GetTudosUncheckbyUser result: " + ret);
         return ret;
     }
 

@@ -1,9 +1,10 @@
 package br.edu.uniritter.mobile.mobile20222_1.view;
 
+import android.os.Bundle;
+import android.util.Log;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-
-import android.os.Bundle;
 
 import br.edu.uniritter.mobile.mobile20222_1.R;
 import br.edu.uniritter.mobile.mobile20222_1.databinding.Activity2Binding;
@@ -22,6 +23,7 @@ public class Activity2 extends AppCompatActivity {
         //User user1 = UserRepository.getInstance().getUserById(getIntent().getIntExtra("id", -1));
         User user1 = getIntent().getParcelableExtra("userObj");
         layout.setUser(user1);
+        Log.d(TAG, "onCreate: passei");
 
 
 
