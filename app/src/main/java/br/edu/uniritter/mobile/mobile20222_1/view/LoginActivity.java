@@ -12,7 +12,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import br.edu.uniritter.mobile.mobile20222_1.R;
 import br.edu.uniritter.mobile.mobile20222_1.presenter.LoginPresenter;
-import br.edu.uniritter.mobile.mobile20222_1.presenter.LoginPresenterContract;
+import br.edu.uniritter.mobile.mobile20222_1.presenter.Contract.LoginPresenterContract;
 import br.edu.uniritter.mobile.mobile20222_1.repository.UserRepository;
 
 public class LoginActivity extends AppCompatActivity implements LoginPresenterContract.view {

@@ -3,6 +3,7 @@ package br.edu.uniritter.mobile.mobile20222_1.presenter;
 import android.content.Intent;
 
 import br.edu.uniritter.mobile.mobile20222_1.model.User;
+import br.edu.uniritter.mobile.mobile20222_1.presenter.Contract.LoginPresenterContract;
 import br.edu.uniritter.mobile.mobile20222_1.repository.UserRepository;
 import br.edu.uniritter.mobile.mobile20222_1.view.Activity2;
 

@@ -1,12 +1,9 @@
 package br.edu.uniritter.mobile.mobile20222_1.view;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,10 +13,10 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.List;
 
 import br.edu.uniritter.mobile.mobile20222_1.R;
-import br.edu.uniritter.mobile.mobile20222_1.adapter.TodosAdapter;
+import br.edu.uniritter.mobile.mobile20222_1.adapter.ToDosAdapter;
 import br.edu.uniritter.mobile.mobile20222_1.model.ToDo;
 import br.edu.uniritter.mobile.mobile20222_1.presenter.ToDoPresenter;
-import br.edu.uniritter.mobile.mobile20222_1.presenter.ToDoPresenterContract;
+import br.edu.uniritter.mobile.mobile20222_1.presenter.Contract.ToDoPresenterContract;
 import br.edu.uniritter.mobile.mobile20222_1.repository.ToDoRepository;
 
 public class ToDoActivity  extends AppCompatActivity implements ToDoPresenterContract.view {
@@ -44,7 +41,7 @@ public class ToDoActivity  extends AppCompatActivity implements ToDoPresenterCon
 
         List<ToDo> param = repo.GetTuDobyUser(userId);
         Log.e(TAG, "onCreate: param " + param.size());
-        TodosAdapter adapter = new TodosAdapter(param);
+        ToDosAdapter adapter = new ToDosAdapter(param);
 
         rc.setAdapter(adapter);
         LinearLayoutManager llm1 = new LinearLayoutManager(this);

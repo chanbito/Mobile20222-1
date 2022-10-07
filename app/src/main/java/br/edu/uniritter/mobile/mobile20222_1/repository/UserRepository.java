@@ -54,6 +54,7 @@ public class UserRepository implements Listener<JSONArray>,Response.ErrorListene
     }
 
     private Company getCompany(JSONObject json) throws JSONException {
+        Log.d(TAG, "getCompany: Company.name " + json.getString("name"));
         return new Company(json.getString("name"), json.getString("catchPhrase"),
                 json.getString("bs"));
     }

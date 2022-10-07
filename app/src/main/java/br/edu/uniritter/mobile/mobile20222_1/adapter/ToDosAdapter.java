@@ -15,10 +15,10 @@ import br.edu.uniritter.mobile.mobile20222_1.R;
 import br.edu.uniritter.mobile.mobile20222_1.model.ToDo;
 
 
-public class TodosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
+public class ToDosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
     private List<ToDo> dados;
 
-    public TodosAdapter(List<ToDo> dados) {
+    public ToDosAdapter(List<ToDo> dados) {
         this.dados = dados;
     }
 
@@ -27,7 +27,7 @@ public class TodosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View layoutVH = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_todos_vh,
                 parent,false);
-        return new UserViewHolder(layoutVH);
+        return new ToDoViewHolder(layoutVH);
     }
 
     @Override

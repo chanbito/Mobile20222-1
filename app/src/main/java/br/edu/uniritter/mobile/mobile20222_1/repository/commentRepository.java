@@ -33,7 +33,7 @@ public class commentRepository implements Response.Listener<JSONArray>, Response
         RequestQueue queue = Volley.newRequestQueue(context);
         JsonArrayRequest jar = new JsonArrayRequest(Request.Method.GET,
                 "https://jsonplaceholder.typicode.com/comments",
-                null,null,null);
+                null,this,this);
 
         queue.add(jar);
     }

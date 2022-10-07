@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.util.Log;
 
 import br.edu.uniritter.mobile.mobile20222_1.model.User;
+import br.edu.uniritter.mobile.mobile20222_1.presenter.Contract.LoginPresenterContract;
 import br.edu.uniritter.mobile.mobile20222_1.repository.UserRepository;
 import br.edu.uniritter.mobile.mobile20222_1.view.MainActivity;
 
@@ -30,6 +31,7 @@ public class LoginPresenter implements LoginPresenterContract.presenter{
     public void validLogin(User user) {
         Intent intent = new Intent(view.getActivity(), MainActivity.class);
         //intent.putExtra("userId", user.getId());
+        Log.d("Presenter", "user company: " + user.getCompany().getName());
         intent.putExtra("userObj", user);
         view.getActivity().startActivity(intent);
     }

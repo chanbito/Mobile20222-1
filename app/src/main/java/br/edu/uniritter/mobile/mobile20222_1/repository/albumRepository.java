@@ -32,7 +32,7 @@ public class albumRepository implements Response.Listener<JSONArray>, Response.E
         RequestQueue queue = Volley.newRequestQueue(context);
         JsonArrayRequest jar = new JsonArrayRequest(Request.Method.GET,
                 "https://jsonplaceholder.typicode.com/albums",
-                null,null,null);
+                null,this,this);
         queue.add(jar);
 
         Log.e(TAG, "Buscando");

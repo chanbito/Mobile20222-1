@@ -34,7 +34,7 @@ public class postRepository implements Response.ErrorListener, Response.Listener
         RequestQueue queue = Volley.newRequestQueue(context);
         JsonArrayRequest jar = new JsonArrayRequest(Request.Method.GET,
                 "https://jsonplaceholder.typicode.com/posts",
-                null,null,null);
+                null,this,this);
 
         queue.add(jar);
         Log.e(TAG, "Buscando");

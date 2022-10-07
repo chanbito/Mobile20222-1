@@ -1,8 +1,6 @@
 package br.edu.uniritter.mobile.mobile20222_1.view;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,16 +10,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.List;
-
 import br.edu.uniritter.mobile.mobile20222_1.R;
-import br.edu.uniritter.mobile.mobile20222_1.adapter.UsersAddapter;
-import br.edu.uniritter.mobile.mobile20222_1.model.ToDo;
 import br.edu.uniritter.mobile.mobile20222_1.model.User;
 import br.edu.uniritter.mobile.mobile20222_1.presenter.ToDoPresenter;
-import br.edu.uniritter.mobile.mobile20222_1.presenter.ToDoPresenterContract;
+import br.edu.uniritter.mobile.mobile20222_1.presenter.Contract.ToDoPresenterContract;
 import br.edu.uniritter.mobile.mobile20222_1.repository.ToDoRepository;
-import br.edu.uniritter.mobile.mobile20222_1.repository.UserRepository;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, ToDoPresenterContract.view {
     private final String TAG = "MainActivity";
@@ -34,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //aqui infla o layout xml
         setContentView(R.layout.activity_main);
-
+        ToDoRepository.getInstance(this);
         /*(R.id.botao).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -46,6 +39,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //findViewById(R.id.ToDoButton).setOnClickListener( this );
         User user = getIntent().getParcelableExtra("userObj");
         this.userID = user.getId();
+
+        Log.d(TAG, "user company: " + user.getCompany().getName());
 
         View.OnClickListener ocl = new View.OnClickListener() {
             @Override
@@ -73,8 +68,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         LinearLayoutManager llm1 = new LinearLayoutManager(this);
         rc.setLayoutManager(llm1);
 */
-
-        int userID = user.getId();
         findViewById(R.id.Perfilbutton).setOnClickListener(
                 (view) -> {
                     Log.d(TAG, "onClick: Alguém clicou no botao de perfil");
@@ -112,17 +105,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.button02) {
-            Intent intent = new Intent(view.getContext(), Activity2.class);
-            startActivity(intent);
-        }
-        /*if (view.getId() == R.id.ToDoButton) {
-            Log.d(TAG, "onClick: Alguém clicou no botão de tarefas");
-
-            Intent intent = new Intent(view.getContext(), ToDoActivity.class);
-            intent.putExtra("userID", userID);
-            startActivity(intent);
-        }*/
     }
 
     @Override

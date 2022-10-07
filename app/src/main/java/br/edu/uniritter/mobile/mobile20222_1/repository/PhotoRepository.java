@@ -32,7 +32,7 @@ public class PhotoRepository implements Response.Listener<JSONArray>, Response.E
         RequestQueue queue = Volley.newRequestQueue(context);
         JsonArrayRequest jar = new JsonArrayRequest(Request.Method.GET,
                 "https://jsonplaceholder.typicode.com/photos",
-                null,null,null);
+                null,this,this);
 
         queue.add(jar);
 

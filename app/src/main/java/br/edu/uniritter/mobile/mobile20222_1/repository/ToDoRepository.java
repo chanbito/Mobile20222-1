@@ -87,7 +87,7 @@ public class ToDoRepository implements Listener<JSONArray>, Response.ErrorListen
         for (int i = 0; i < response.length(); i++) {
             try {
                 JSONObject json = response.getJSONObject(i);
-                Log.d(TAG, "onResponse: " + json.toString());
+
                 todos.add(new ToDo(json.getInt("userId"),json.getInt("id"),
                         json.getString("title"),json.getBoolean("completed")));
             } catch (JSONException e) {

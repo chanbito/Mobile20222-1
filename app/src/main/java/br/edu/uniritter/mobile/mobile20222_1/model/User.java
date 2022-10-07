@@ -87,6 +87,9 @@ public class User implements Parcelable {
         parcel.writeString(name);
         parcel.writeString(userLogin);
         parcel.writeString(password);
+        parcel.writeString(email );
+        parcel.writeString(phone );
+        parcel.writeString(website);
         parcel.writeTypedObject(address, i);
         parcel.writeTypedObject(company, i);
     }
