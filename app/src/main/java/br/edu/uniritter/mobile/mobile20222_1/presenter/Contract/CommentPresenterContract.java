@@ -2,7 +2,7 @@ package br.edu.uniritter.mobile.mobile20222_1.presenter.Contract;
 
 import android.app.Activity;
 
-public class CommentContract {
+public class CommentPresenterContract {
     public interface view {
 
         public Activity getActivity();
@@ -10,6 +10,7 @@ public class CommentContract {
 
     public interface presenter {
         /*public int GetTodosCount(int userID);*/
-        public void GoCommentsbyPost(int postID);
+        public void PopularCommentsbyPost(int postID);
     }
+
 }

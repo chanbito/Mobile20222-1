@@ -17,17 +17,15 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.edu.uniritter.mobile.mobile20222_1.model.Album;
-import br.edu.uniritter.mobile.mobile20222_1.model.Photo;
 import br.edu.uniritter.mobile.mobile20222_1.model.Post;
 
-public class postRepository implements Response.ErrorListener, Response.Listener<JSONArray> {
+public class PostRepository implements Response.ErrorListener, Response.Listener<JSONArray> {
     private final String TAG = "postRepository";
     private Context context;
     private List<Post> posts;
-    private static postRepository instance;
+    private static PostRepository instance;
 
-    public postRepository(Context context) {
+    public PostRepository(Context context) {
         super();
         this.context = context;
         posts = new ArrayList<Post>();
@@ -37,12 +35,13 @@ public class postRepository implements Response.ErrorListener, Response.Listener
                 null,this,this);
 
         queue.add(jar);
+
         Log.e(TAG, "Buscando");
     }
 
-    public static postRepository getInstance(Context cont) {
+    public static PostRepository getInstance(Context cont) {
         if(instance == null)
-            instance = new postRepository(cont);
+            instance = new PostRepository(cont);
         return instance;
     }
 
@@ -57,6 +56,7 @@ public class postRepository implements Response.ErrorListener, Response.Listener
             if(t.getUserId() == userID)
                 ret.add(t);
         }
+        Log.d(TAG, "getPostsbyUser return: " + ret.size());
         return ret;
 
     }
@@ -72,7 +72,6 @@ public class postRepository implements Response.ErrorListener, Response.Listener
         for (int i = 0; i < response.length(); i++) {
             try {
                 JSONObject json = response.getJSONObject(i);
-                Log.d(TAG, "onResponse: " + json.toString());
                 posts.add(new Post(json.getInt("userId"),json.getInt("id"),
                         json.getString("title"), json.getString("body")));
             } catch (JSONException e) {

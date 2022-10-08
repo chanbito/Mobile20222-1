@@ -13,6 +13,8 @@ import com.google.android.material.snackbar.Snackbar;
 import br.edu.uniritter.mobile.mobile20222_1.R;
 import br.edu.uniritter.mobile.mobile20222_1.presenter.LoginPresenter;
 import br.edu.uniritter.mobile.mobile20222_1.presenter.Contract.LoginPresenterContract;
+import br.edu.uniritter.mobile.mobile20222_1.repository.PostRepository;
+import br.edu.uniritter.mobile.mobile20222_1.repository.ToDoRepository;
 import br.edu.uniritter.mobile.mobile20222_1.repository.UserRepository;
 
 public class LoginActivity extends AppCompatActivity implements LoginPresenterContract.view {
@@ -23,6 +25,8 @@ public class LoginActivity extends AppCompatActivity implements LoginPresenterCo
         super.onCreate(savedInstanceState);
         Log.e("TAG", "onCreate: antes do getInstance" );
         UserRepository.getInstance(this);
+        ToDoRepository.getInstance(this);
+        PostRepository.getInstance(this);
         Log.e("TAG", "onCreate: depois do getInstance "+UserRepository.getInstance(this).getUsers().size());
 
         setContentView(R.layout.activity_login);

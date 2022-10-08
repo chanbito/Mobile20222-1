@@ -2,22 +2,21 @@ package br.edu.uniritter.mobile.mobile20222_1.presenter;
 
 import android.content.Intent;
 
-import br.edu.uniritter.mobile.mobile20222_1.model.Comment;
-import br.edu.uniritter.mobile.mobile20222_1.presenter.Contract.CommentContract;
-import br.edu.uniritter.mobile.mobile20222_1.view.ToDoActivity;
+import br.edu.uniritter.mobile.mobile20222_1.presenter.Contract.CommentPresenterContract;
+import br.edu.uniritter.mobile.mobile20222_1.view.CommentActivity;
 
-public class CommentPresenter implements CommentContract.presenter {
+public class CommentPresenter implements CommentPresenterContract.presenter {
 
-    private final CommentContract.view view;
+    private final CommentPresenterContract.view view;
 
-    private CommentPresenter(CommentContract.view view){
+    public CommentPresenter(CommentPresenterContract.view view){
         this.view = view;
     }
-    
+
     @Override
-    public void GoCommentsbyPost(int postID) {
-        /*Intent intent = new Intent(view.getActivity(), .class);
+    public void PopularCommentsbyPost(int postID) {
+        Intent intent = new Intent(view.getActivity(), CommentActivity.class);
         intent.putExtra("postID",postID);
-        view.getActivity().startActivity(intent);*/
+        view.getActivity().startActivity(intent);
     }
 }

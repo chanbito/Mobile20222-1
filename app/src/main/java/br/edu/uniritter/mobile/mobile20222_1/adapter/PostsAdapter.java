@@ -43,9 +43,11 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         TextView body = holder.itemView.findViewById(R.id.bodyEditTextTextMultiLine);
         body.setText(obj.getBody());
         Button b = holder.itemView.findViewById(R.id.button);
+
+        b.setTag(obj);
         b.setOnClickListener((view -> {
             Log.d(TAG, "onClick: Alguém clicou no botao de comentario");
-
+            ((Post)view.getTag()).getId();
         }));
     }
 

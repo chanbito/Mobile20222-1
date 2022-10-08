@@ -1,6 +1,8 @@
 package br.edu.uniritter.mobile.mobile20222_1.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,14 +13,16 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import br.edu.uniritter.mobile.mobile20222_1.R;
+import br.edu.uniritter.mobile.mobile20222_1.adapter.PostsAdapter;
 import br.edu.uniritter.mobile.mobile20222_1.model.User;
 import br.edu.uniritter.mobile.mobile20222_1.presenter.ToDoPresenter;
 import br.edu.uniritter.mobile.mobile20222_1.presenter.Contract.ToDoPresenterContract;
 import br.edu.uniritter.mobile.mobile20222_1.repository.ToDoRepository;
+import br.edu.uniritter.mobile.mobile20222_1.repository.PostRepository;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, ToDoPresenterContract.view {
     private final String TAG = "MainActivity";
-    private int userID ;
+    private User user ;
     Button button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,46 +32,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //aqui infla o layout xml
         setContentView(R.layout.activity_main);
         ToDoRepository.getInstance(this);
-        /*(R.id.botao).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), Activity2.class);
-                startActivity(intent);
-            }
-        });
-        */
-        //findViewById(R.id.ToDoButton).setOnClickListener( this );
-        User user = getIntent().getParcelableExtra("userObj");
-        this.userID = user.getId();
+        PostRepository.getInstance(this);
+
+        user = getIntent().getParcelableExtra("userObj");
 
         Log.d(TAG, "user company: " + user.getCompany().getName());
 
-        View.OnClickListener ocl = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "onClick: Alguém clicou ocl");
-                Intent intent = new Intent(view.getContext(), UserActivity.class);
-
-                startActivity(intent);
-            }
-        };
-        //buscando um elemento visual do layout para manuipulação
-        //Button bt  = findViewById(R.id.button02);
-
-        //findViewById(R.id.button02).setOnClickListener( ocl );
-        /*findViewById(R.id.botao).setOnClickListener(
-                (view) -> {
-                    Log.d(TAG, "onClick: Alguém clicou lambda");
-
-                    Intent intent = new Intent(view.getContext(), Activity2.class);
-                    startActivity(intent);
-                });
-        RecyclerView rc = findViewById(R.id.recycler1);
-        UsersAddapter adapter = new UsersAddapter( UserRepository.getInstance(this).getUsers());
+        RecyclerView rc = findViewById(R.id.recyclerPost);
+        PostsAdapter adapter = new PostsAdapter( PostRepository.getInstance(this).getPostsbyUser(
+                this.user.getId()));
         rc.setAdapter(adapter);
         LinearLayoutManager llm1 = new LinearLayoutManager(this);
         rc.setLayoutManager(llm1);
-*/
+
         findViewById(R.id.Perfilbutton).setOnClickListener(
                 (view) -> {
                     Log.d(TAG, "onClick: Alguém clicou no botao de perfil");
@@ -79,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 (view) -> {
                     Log.d(TAG, "onClick: Alguém clicou no botão de tarefas");
-                    new ToDoPresenter(this).GoToDos(this.userID);
+                    new ToDoPresenter(this).GoToDos(this.user.getId());
 
                     /*
                     Intent intent = new Intent(view.getContext(), ToDoActivity.class);
@@ -92,14 +69,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //User user = UserRepository.getInstance().getUserById(id);
         //troquei de envio de id int para objeto
 
-
+        Log.d(TAG, "Company: " + user.getCompany().getName());
         button = findViewById(R.id.ToDoButton);
-        button.setText("" + ToDoRepository.getInstance(this).GetTudosUncheckbyUser(user.getId()));
+        button.setText("" + ToDoRepository.getInstance(this).GetTudosUncheckbyUser(this.user.getId()));
 
 
         //TextView tv = (TextView) findViewById(R.id.editTextTextPersonName2);
         TextView tv = (TextView) findViewById(R.id.TextPersonName2);
         tv.setText(user.getName());
+
 
     }
 
