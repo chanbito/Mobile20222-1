@@ -17,11 +17,12 @@ import java.util.List;
 import br.edu.uniritter.mobile.mobile20222_1.R;
 import br.edu.uniritter.mobile.mobile20222_1.adapter.UsersAddapter;
 import br.edu.uniritter.mobile.mobile20222_1.model.User;
+import br.edu.uniritter.mobile.mobile20222_1.repository.OnReadyListener;
 import br.edu.uniritter.mobile.mobile20222_1.repository.UserRepository;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private final String TAG = "MainActivity";
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,9 +52,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         };
         //buscando um elemento visual do layout para manuipulação
-        Button bt  = findViewById(R.id.button02);
+        Button bt = findViewById(R.id.button02);
 
-        findViewById(R.id.button02).setOnClickListener( ocl );
+        findViewById(R.id.button02).setOnClickListener(ocl);
         findViewById(R.id.botao).setOnClickListener(
                 (view) -> {
                     Log.d(TAG, "onClick: Alguém clicou lambda");
@@ -61,11 +62,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Intent intent = new Intent(view.getContext(), Activity2.class);
                     startActivity(intent);
                 });
-        RecyclerView rc = findViewById(R.id.recycler1);
-        UsersAddapter adapter = new UsersAddapter( UserRepository.getInstance(this).getUsers());
-        rc.setAdapter(adapter);
-        LinearLayoutManager llm1 = new LinearLayoutManager(this);
-        rc.setLayoutManager(llm1);
+        //RecyclerView rc = findViewById(R.id.recycler1);
+        //UsersAddapter adapter = new UsersAddapter( UserRepository.getInstance(this).getUsers());
+        UserRepository.getInstance(this, new OnReadyListener() {
+            @Override
+            public void onReady() {
+                RecyclerView rc = findViewById(R.id.recycler1);
+                UsersAddapter adapter = new UsersAddapter(UserRepository.getInstance().getUsers());
+                rc.setAdapter(adapter);
+                LinearLayoutManager llm1 = new LinearLayoutManager(getApplicationContext());
+                rc.setLayoutManager(llm1);
+            }
+        });
+        //UserRepository.getInstance(this, this);
+
+        //rc.setAdapter(adapter);
+        //LinearLayoutManager llm1 = new LinearLayoutManager(this);
+        //rc.setLayoutManager(llm1);
 
 
         //int id = getIntent().getIntExtra("userId",-1);
@@ -74,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         User user = getIntent().getParcelableExtra("userObj");
 
         TextView tv = (TextView) findViewById(R.id.editTextTextPersonName2);
-        tv.setText("bem vindo "+user.getName()+"("+user.getPassword()+")");
+        tv.setText("bem vindo " + user.getName() + "(" + user.getPassword() + ")");
 
     }
 
@@ -86,3 +99,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 }
+
+

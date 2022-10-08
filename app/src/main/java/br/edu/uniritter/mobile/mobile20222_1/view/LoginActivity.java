@@ -26,8 +26,8 @@ public class LoginActivity extends AppCompatActivity implements LoginPresenterCo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.e("TAG", "onCreate: antes do getInstance" );
-        UserRepository.getInstance(this);
-        Log.e("TAG", "onCreate: depois do getInstance "+UserRepository.getInstance(this).getUsers().size());
+        UserRepository.getInstance(this, null);
+        Log.e("TAG", "onCreate: depois do getInstance "+UserRepository.getInstance(this, null).getUsers().size());
 
         setContentView(R.layout.activity_login);
 

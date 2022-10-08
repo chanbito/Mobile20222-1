@@ -26,6 +26,7 @@ public class UserRepository implements Listener<JSONArray>,Response.ErrorListene
     private List<User> users;
     private static UserRepository instance;
     private Context contexto;
+    private OnReadyListener onReadyListener;
 
     private UserRepository(Context contexto) {
         super();
@@ -36,7 +37,7 @@ public class UserRepository implements Listener<JSONArray>,Response.ErrorListene
         JsonArrayRequest jaRequest = new JsonArrayRequest(Request.Method.GET,
                                                        "https://jsonplaceholder.typicode.com/users",
                                                 null, this, this);
-
+        /*
         //exemplo de uso com injeção do ResponseListener e erro Listener
         JsonArrayRequest jaRequestInject1 = new JsonArrayRequest(Request.Method.GET,
                 "https://jsonplaceholder.typicode.com/users",
@@ -91,7 +92,7 @@ public class UserRepository implements Listener<JSONArray>,Response.ErrorListene
                     }
                 );
 
-
+        */
         queue.add(jaRequest);
 
         Log.e(TAG, "UserRepository: lancei" );
@@ -108,10 +109,22 @@ public class UserRepository implements Listener<JSONArray>,Response.ErrorListene
 
         
     }
+    public static UserRepository getInstance() {
+        return instance;
 
-    public static UserRepository getInstance(Context contexto) {
+    }
+
+    public static UserRepository getInstance(Context contexto, OnReadyListener orl) {
         if (instance == null) {
             instance = new UserRepository(contexto);
+            instance.onReadyListener = orl;
+
+        }
+        if (!instance.getUsers().isEmpty()) {
+            if (orl != null) {
+                orl.onReady();
+                instance.onReadyListener = null;
+            }
         }
         return instance;
     }
@@ -169,6 +182,10 @@ public class UserRepository implements Listener<JSONArray>,Response.ErrorListene
             }
 
         }
+        if (onReadyListener != null) {
+            onReadyListener.onReady();
+        }
+        onReadyListener = null;
         Log.e(TAG, "onResponse: terminei" );
     }
 
