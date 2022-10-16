@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,12 +13,16 @@ import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.List;
+
 import br.edu.uniritter.mobile.mobile20222_1.R;
 import br.edu.uniritter.mobile.mobile20222_1.model.User;
 import br.edu.uniritter.mobile.mobile20222_1.presenter.LoginPresenter;
 import br.edu.uniritter.mobile.mobile20222_1.presenter.LoginPresenter2;
 import br.edu.uniritter.mobile.mobile20222_1.presenter.LoginPresenterContract;
+import br.edu.uniritter.mobile.mobile20222_1.repository.OnReadyListener;
 import br.edu.uniritter.mobile.mobile20222_1.repository.UserRepository;
+import br.edu.uniritter.mobile.mobile20222_1.repository.UserSQLRepository;
 
 public class LoginActivity extends AppCompatActivity implements LoginPresenterContract.view {
 
@@ -25,11 +30,44 @@ public class LoginActivity extends AppCompatActivity implements LoginPresenterCo
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
+
+        SharedPreferences preferences = getPreferences(0);
+        boolean sqlUpdated = preferences.getBoolean("sqlUpdated", false);
+        boolean logged = preferences.getBoolean("logged", false);
+        int userId = preferences.getInt("userId", -1);
+
+        Log.d("LoginActivity", "Preferences: "+sqlUpdated+", "+logged+ ", "+userId);
+
+        if (userId >=0 && sqlUpdated) {
+            User u = UserSQLRepository.getInstance(getActivity()).getUserById(userId);
+            if (u != null) {
+                ((TextView) findViewById(R.id.edLogin)).setText(u.getUserLogin());
+            }
+        }
+
+
         Log.e("TAG", "onCreate: antes do getInstance" );
-        UserRepository.getInstance(this, null);
+
+        // vou colocar os users vindos do endpoint para dentro do sql após a carga
+        UserRepository.getInstance(this, new OnReadyListener() {
+                    @Override
+                    public void onReady() {
+                        if (!sqlUpdated) {
+                            List<User> users = UserRepository.getInstance().getUsers();
+                            for (User u : users) {
+                                UserSQLRepository.getInstance(getActivity()).insertUser(u);
+                            }
+                            SharedPreferences preferences = getPreferences(0);
+                            SharedPreferences.Editor editor = preferences.edit();
+                            editor.putBoolean("sqlUpdated", true);
+                            editor.commit();
+                        }
+                    }
+                }
+            );
         Log.e("TAG", "onCreate: depois do getInstance "+UserRepository.getInstance(this, null).getUsers().size());
 
-        setContentView(R.layout.activity_login);
 
         //this.presenter = new LoginPresenter(this);
         //trocando a presenter, com o mesmo contrato
@@ -57,6 +95,15 @@ public class LoginActivity extends AppCompatActivity implements LoginPresenterCo
     @Override
     public Activity getActivity() {
         return this;
+    }
+
+    @Override
+    public void preferencesUserUpdate(int userId) {
+        SharedPreferences preferences = getPreferences(0);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt("userId", userId);
+        editor.putBoolean("logged", true);
+        editor.commit();
     }
 
 

@@ -21,7 +21,7 @@ public class LoginPresenter implements LoginPresenterContract.presenter{
         if (u == null || ! u.getPassword().equals(password)) {
             view.message("Usuário ou senha Inválido");
         } else {
-            u.setPassword("trocada");
+            //u.setPassword("trocada");
             validLogin(u);
         }
     }
@@ -30,6 +30,7 @@ public class LoginPresenter implements LoginPresenterContract.presenter{
         Intent intent = new Intent(view.getActivity(), MainActivity.class);
         //intent.putExtra("userId", user.getId());
         intent.putExtra("userObj", user);
+        view.preferencesUserUpdate(user.getId());
         view.getActivity().startActivity(intent);
     }
 }
