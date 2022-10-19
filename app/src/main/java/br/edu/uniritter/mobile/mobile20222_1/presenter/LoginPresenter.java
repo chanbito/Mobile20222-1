@@ -1,10 +1,10 @@
 package br.edu.uniritter.mobile.mobile20222_1.presenter;
 
 import android.content.Intent;
-import android.util.Log;
+import android.content.res.Resources;
 
+import br.edu.uniritter.mobile.mobile20222_1.R;
 import br.edu.uniritter.mobile.mobile20222_1.model.User;
-import br.edu.uniritter.mobile.mobile20222_1.presenter.Contract.LoginPresenterContract;
 import br.edu.uniritter.mobile.mobile20222_1.repository.UserRepository;
 import br.edu.uniritter.mobile.mobile20222_1.view.MainActivity;
 
@@ -16,14 +16,12 @@ public class LoginPresenter implements LoginPresenterContract.presenter{
     }
     @Override
     public void checkLogin(String login, String password) {
-        UserRepository repo  = UserRepository.getInstance(view.getActivity());
+        UserRepository repo  = UserRepository.getInstance(view.getActivity(), null);
         User u = repo.getUserByUserLogin(login);
         if (u == null || ! u.getPassword().equals(password)) {
-            Log.e("LoginPresenter", "Usuário ou senha Inválido");
             view.message("Usuário ou senha Inválido");
         } else {
-            Log.e("LoginPresenter", "trocada");
-            u.setPassword("trocada");
+            //u.setPassword("trocada");
             validLogin(u);
         }
     }
@@ -31,8 +29,8 @@ public class LoginPresenter implements LoginPresenterContract.presenter{
     public void validLogin(User user) {
         Intent intent = new Intent(view.getActivity(), MainActivity.class);
         //intent.putExtra("userId", user.getId());
-        Log.d("Presenter", "user company: " + user.getCompany().getName());
         intent.putExtra("userObj", user);
+        view.preferencesUserUpdate(user.getId());
         view.getActivity().startActivity(intent);
     }
 }
