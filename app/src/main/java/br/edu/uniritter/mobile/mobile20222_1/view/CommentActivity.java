@@ -4,20 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
-
-import br.edu.uniritter.mobile.mobile20222_1.R;
-import br.edu.uniritter.mobile.mobile20222_1.adapter.ToDosAdapter;
-import br.edu.uniritter.mobile.mobile20222_1.model.ToDo;
-import br.edu.uniritter.mobile.mobile20222_1.presenter.CommentPresenter;
-import br.edu.uniritter.mobile.mobile20222_1.presenter.Contract.CommentPresenterContract;
-import br.edu.uniritter.mobile.mobile20222_1.presenter.ToDoPresenter;
-import br.edu.uniritter.mobile.mobile20222_1.repository.commentRepository;
+import br.edu.uniritter.mobile.mobile20222_1.presenter.Contract_package.CommentPresenterContract;
 
 
 public class CommentActivity extends AppCompatActivity implements CommentPresenterContract.view {

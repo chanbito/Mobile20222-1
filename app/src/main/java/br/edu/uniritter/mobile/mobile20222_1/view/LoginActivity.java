@@ -3,8 +3,6 @@ package br.edu.uniritter.mobile.mobile20222_1.view;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,12 +15,11 @@ import java.util.List;
 
 import br.edu.uniritter.mobile.mobile20222_1.R;
 import br.edu.uniritter.mobile.mobile20222_1.model.User;
+import br.edu.uniritter.mobile.mobile20222_1.presenter.Contract_package.LoginPresenterContract;
 import br.edu.uniritter.mobile.mobile20222_1.presenter.LoginPresenter;
-import br.edu.uniritter.mobile.mobile20222_1.presenter.LoginPresenter2;
-import br.edu.uniritter.mobile.mobile20222_1.presenter.LoginPresenterContract;
 import br.edu.uniritter.mobile.mobile20222_1.repository.OnReadyListener;
 import br.edu.uniritter.mobile.mobile20222_1.repository.UserRepository;
-import br.edu.uniritter.mobile.mobile20222_1.repository.UserSQLRepository;
+import br.edu.uniritter.mobile.mobile20222_1.repository.SQLRepositoryes.UserSQLRepository;
 
 public class LoginActivity extends AppCompatActivity implements LoginPresenterContract.view {
 
@@ -65,13 +62,14 @@ public class LoginActivity extends AppCompatActivity implements LoginPresenterCo
                         }
                     }
                 }
-            );
-        Log.e("TAG", "onCreate: depois do getInstance "+UserRepository.getInstance(this, null).getUsers().size());
+        );
+        Log.e("TAG", "onCreate: depois do getInstance "+UserRepository
+                .getInstance(this, null  ).getUsers().size());
 
 
         //this.presenter = new LoginPresenter(this);
         //trocando a presenter, com o mesmo contrato
-        this.presenter = new LoginPresenter(this);
+        presenter = new LoginPresenter(this);
 
         findViewById(R.id.buttonLogin).setOnClickListener(
                 new View.OnClickListener() {

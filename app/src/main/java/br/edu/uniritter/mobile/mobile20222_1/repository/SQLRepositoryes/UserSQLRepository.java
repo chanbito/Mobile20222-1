@@ -1,4 +1,4 @@
-package br.edu.uniritter.mobile.mobile20222_1.repository;
+package br.edu.uniritter.mobile.mobile20222_1.repository.SQLRepositoryes;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -18,9 +18,7 @@ public class UserSQLRepository {
     public static UserSQLRepository getInstance(Context contexto) {
         if (instance == null) {
             instance = new UserSQLRepository(contexto);
-
         }
-
         return instance;
     }
 
@@ -32,8 +30,8 @@ public class UserSQLRepository {
 
     }
     public List<User> getUsers() {
-        String sql = "select id, name, userLogin, password from users where id=? and name = ?;";
-        User u = new User(1, "1","1","1");
+        String sql = "select id, name, userLogin, password, email, phone, website from users where id=? and name = ?;";
+        User u = new User(1, "1","1","1","1","1","1");
         String[] args = {u.getId()+"", "jean"};
         Cursor cursor = database.rawQuery(sql,args);
         cursor.moveToFirst();
@@ -44,7 +42,7 @@ public class UserSQLRepository {
         return users;
     }
     public User getUserById(int id) {
-        String sql = "select id, name, userLogin, password from users where id=? ;";
+        String sql = "select id, name, userLogin, password, email, phone, website from users where id=? ;";
         String[] args = {""+id};
         Cursor cursor = database.rawQuery(sql,args);
         if (cursor.moveToFirst()) {
@@ -54,8 +52,8 @@ public class UserSQLRepository {
         }
     }
     public List<User> getUsersByName(String name) {
-        String sql = "select id, name, userLogin, password from users where name like ?;";
-        User u = new User(1, "1","1","1");
+        String sql = "select id, name, userLogin, password, email, phone, website from users where name like ?;";
+        User u = new User(1, "1","1","1","1","1","1");
         String[] args = {"%"+name+"%"};
         Cursor cursor = database.rawQuery(sql,args);
         cursor.moveToFirst();
@@ -67,15 +65,18 @@ public class UserSQLRepository {
     }
     //
     public void insertUser(User user) {
-        String sql = "insert into users (id, name, userLogin, password) values (?, ?, ?, ?);";
+        String sql = "insert into users (id, name, userLogin, password, email, phone, website) " +
+                "values (?, ?, ?, ?, ?, ?, ?);";
         //para usar execSQL os args são um array de Object, não de Strings
         Object[] args = {user.getId(), user.getName(), user.getUserLogin(), user.getPassword()};
         database.execSQL(sql,args);
     }
     public void updateUser(User user) {
-        String sql = "update  users set name = ?, userLogin = ?, password = ?;";
+        String sql = "update  users set name = ?, userLogin = ?, password = ?, email = ?, phone = ?," +
+                " website = ?;";
         //para usar execSQL os args são um array de Object, não de Strings
-        Object[] args = {user.getName(), user.getUserLogin(), user.getPassword()};
+        Object[] args = {user.getName(), user.getUserLogin(), user.getPassword(), user.getEmail(),
+        user.getPhone(), user.getWebsite()};
         database.execSQL(sql,args);
     }
     public void deleteUser(User user) {
@@ -91,7 +92,11 @@ public class UserSQLRepository {
                 cursor.getInt(0),
                 cursor.getString(1),
                 cursor.getString(2),
-                cursor.getString(3));
+                cursor.getString(3),
+                cursor.getString(4),
+                cursor.getString(5),
+                cursor.getString(6)
+        );
         return user;
     }
 

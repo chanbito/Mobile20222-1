@@ -4,17 +4,19 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Company implements Parcelable{
+    private int id;
     private String name;
     private String catchPhrase;
     private String bs;
 
-    public Company(String name, String catchPhrase, String bs) {
+    public Company( int id,String name, String catchPhrase, String bs) {
         this.name = name;
         this.catchPhrase = catchPhrase;
         this.bs = bs;
     }
 
     protected Company( Parcel in) {
+        id = in.readInt();
         bs = in.readString();
         name = in.readString();
         catchPhrase = in.readString();
@@ -44,6 +46,7 @@ public class Company implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
         parcel.writeString(name);
         parcel.writeString(catchPhrase);
         parcel.writeString(bs);

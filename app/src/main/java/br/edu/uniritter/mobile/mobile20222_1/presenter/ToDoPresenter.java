@@ -2,7 +2,7 @@ package br.edu.uniritter.mobile.mobile20222_1.presenter;
 
 import android.content.Intent;
 
-import br.edu.uniritter.mobile.mobile20222_1.presenter.Contract.ToDoPresenterContract;
+import br.edu.uniritter.mobile.mobile20222_1.presenter.Contract_package.ToDoPresenterContract;
 import br.edu.uniritter.mobile.mobile20222_1.view.ToDoActivity;
 
 public class ToDoPresenter implements ToDoPresenterContract.presenter {

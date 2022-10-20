@@ -4,23 +4,27 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Geo implements Parcelable {
+    private int id;
     private String lat;
     private String lng;
 
-    public Geo(String lat, String lng ){
+    public Geo(String lat, String lng, int id ){
         this.lat = lat;
         this.lng = lng;
+        this.id = id;
     }
 
     protected Geo(Parcel in) {
         lat = in.readString();
         lng = in.readString();
+        id = in.readInt();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(lat);
         dest.writeString(lng);
+        dest.writeInt(id);
     }
 
     @Override
@@ -42,6 +46,10 @@ public class Geo implements Parcelable {
 
     public String getLat() {
         return lat;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void setLat(String lat) {

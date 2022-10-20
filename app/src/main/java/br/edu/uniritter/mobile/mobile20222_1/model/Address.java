@@ -4,13 +4,15 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Address implements Parcelable {
+    private int id;
     private String street;
     private String suite;
     private String city;
     private String zipcode;
     private Geo geo;
 
-    public Address(String street, String suite, String city, String zipcode, Geo Geo){
+    public Address(int id, String street, String suite, String city, String zipcode, Geo Geo){
+        this.id = id;
         this.street = street;
         this.suite = suite;
         this.city = city;
@@ -19,6 +21,7 @@ public class Address implements Parcelable {
     }
 
     protected Address(Parcel in) {
+        id = in.readInt();
         street = in.readString();
         suite = in.readString();
         city = in.readString();
@@ -46,6 +49,7 @@ public class Address implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
         parcel.writeString(street);
         parcel.writeString(suite);
         parcel.writeString(city);
@@ -94,4 +98,11 @@ public class Address implements Parcelable {
     }
 
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

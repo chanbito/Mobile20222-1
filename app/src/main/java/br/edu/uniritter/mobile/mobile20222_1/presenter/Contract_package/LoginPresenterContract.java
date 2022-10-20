@@ -1,7 +1,6 @@
-package br.edu.uniritter.mobile.mobile20222_1.presenter.Contract;
+package br.edu.uniritter.mobile.mobile20222_1.presenter.Contract_package;
 
 import android.app.Activity;
-import android.content.Context;
 
 import br.edu.uniritter.mobile.mobile20222_1.model.User;
 

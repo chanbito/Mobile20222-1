@@ -26,6 +26,18 @@ public class User implements Parcelable {
         this.address = address;
         this.company = company;
     }
+    public User(int id, String name, String userLogin, String password, String email, String phone,
+                String website) {
+        this.id = id;
+        this.name = name;
+        this.userLogin = userLogin;
+        this.password = password;
+        this.email = email;
+        this.phone = phone;
+        this.website = website;
+        this.address = null;
+        this.company = null;
+    }
 
     protected User(Parcel in) {
         id = in.readInt();
@@ -35,9 +47,6 @@ public class User implements Parcelable {
         email = in.readString();
         phone = in.readString();
         website = in.readString();
-        // visitar https://stackoverflow.com/questions/42665066/android-parsing-same-variable-object-name-in-retrofit
-        //address = in.readTypedObject(Address.CREATOR);
-        //company = in.readTypedObject(Company.CREATOR);
         company = in.readParcelable(Company.class.getClassLoader());
         address = in.readParcelable(Address.class.getClassLoader());
 

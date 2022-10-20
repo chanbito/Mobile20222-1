@@ -2,7 +2,7 @@ package br.edu.uniritter.mobile.mobile20222_1.presenter;
 
 import android.content.Intent;
 
-import br.edu.uniritter.mobile.mobile20222_1.presenter.Contract.CommentPresenterContract;
+import br.edu.uniritter.mobile.mobile20222_1.presenter.Contract_package.CommentPresenterContract;
 import br.edu.uniritter.mobile.mobile20222_1.view.CommentActivity;
 
 public class CommentPresenter implements CommentPresenterContract.presenter {

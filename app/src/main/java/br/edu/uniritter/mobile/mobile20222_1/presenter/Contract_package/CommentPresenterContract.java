@@ -1,4 +1,4 @@
-package br.edu.uniritter.mobile.mobile20222_1.presenter.Contract;
+package br.edu.uniritter.mobile.mobile20222_1.presenter.Contract_package;
 
 import android.app.Activity;
 

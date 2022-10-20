@@ -16,7 +16,7 @@ import br.edu.uniritter.mobile.mobile20222_1.R;
 import br.edu.uniritter.mobile.mobile20222_1.adapter.ToDosAdapter;
 import br.edu.uniritter.mobile.mobile20222_1.model.ToDo;
 import br.edu.uniritter.mobile.mobile20222_1.presenter.ToDoPresenter;
-import br.edu.uniritter.mobile.mobile20222_1.presenter.Contract.ToDoPresenterContract;
+import br.edu.uniritter.mobile.mobile20222_1.presenter.Contract_package.ToDoPresenterContract;
 import br.edu.uniritter.mobile.mobile20222_1.repository.ToDoRepository;
 
 public class ToDoActivity  extends AppCompatActivity implements ToDoPresenterContract.view {
